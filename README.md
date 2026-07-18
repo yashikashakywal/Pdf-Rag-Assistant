@@ -1,80 +1,84 @@
-# 📄 PDF RAG Assistant
+# 📚 PDF RAG Assistant
 
-A full-stack AI-powered PDF Question Answering application that allows users to upload PDF documents and ask questions in natural language. The application uses Retrieval-Augmented Generation (RAG) to retrieve relevant information from uploaded PDFs and generate accurate responses using an LLM.
+An AI-powered PDF Question Answering application that allows users to upload one or multiple PDF documents and ask questions in natural language. The application uses **Retrieval-Augmented Generation (RAG)** to retrieve relevant information from uploaded documents and generate context-aware responses.
 
-The project includes a complete authentication system with separate Login and Signup pages, ensuring that only authenticated users can access the application.
+> Instead of relying solely on an LLM's knowledge, the assistant searches your uploaded documents and answers based on their content.
 
 ---
 
-## 🚀 Features
+## 🚀 Live Demo
 
-- 🔐 User Authentication (JWT)
-- 👤 Separate Login & Signup Pages
-- 📂 Upload one or multiple PDF files
-- 📖 Automatic PDF text extraction
-- ✂️ Intelligent text chunking
-- 🔎 Semantic search using FAISS
-- 🤖 AI-powered question answering
-- 💬 Interactive chat interface
-- 🗂 Conversation history
-- 📱 Responsive UI
+🔗 **Live Application:** https://your-live-link-here
+
+---
+
+## ✨ Features
+
+- 📄 Upload one or multiple PDF documents
+- 🤖 Ask questions in natural language
+- 🔍 Semantic search using vector embeddings
+- 📑 Context-aware answers from uploaded PDFs
 - ⚡ FastAPI backend
-- 🎨 Clean HTML, CSS & JavaScript frontend
+- 🔐 User Authentication (Login & Signup)
+- 📱 Responsive frontend
+- 🚀 Deployed and accessible online
 
 ---
 
 ## 🛠 Tech Stack
 
 ### Frontend
-
 - HTML5
 - CSS3
 - JavaScript
 
 ### Backend
-
 - FastAPI
 - Python
-- JWT Authentication
 
-### AI / NLP
-
+### AI & RAG
 - LangChain
-- Sentence Transformers
 - FAISS
-- HuggingFace / Groq LLM
+- Hugging Face Embeddings
 
 ### Database
-
 - MongoDB
+
+### Authentication
+- JWT Authentication
+
+### Deployment
+- Render
+- Netlify
 
 ---
 
 # 📂 Project Structure
 
 ```
-PDF-RAG-Assistant
+Pdf-Rag-Assistant/
 │
-├── backend
-│   ├── app
-│   │   ├── api
-│   │   ├── auth
-│   │   ├── services
-│   │   ├── models
-│   │   ├── database
-│   │   └── main.py
-│   │
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── core/
+│   │   ├── db/
+│   │   ├── models/
+│   │   └── services/
 │   ├── requirements.txt
-│   └── .env
+│   └── .env.example
 │
-├── frontend
+├── frontend/
+│   ├── index.html
 │   ├── login.html
 │   ├── signup.html
-│   ├── index.html
-│   ├── css
-│   ├── js
-│   └── assets
+│   ├── forgot-password.html
+│   ├── reset-password.html
+│   ├── style.css
+│   ├── script.js
+│   └── auth.js
 │
+├── render.yaml
 └── README.md
 ```
 
@@ -85,9 +89,9 @@ PDF-RAG-Assistant
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/pdf-rag-assistant.git
+git clone https://github.com/yashikashakywal/Pdf-Rag-Assistant.git
 
-cd pdf-rag-assistant
+cd Pdf-Rag-Assistant
 ```
 
 ---
@@ -106,17 +110,14 @@ Create virtual environment
 
 ```bash
 python -m venv .venv
-```
-
-Activate
-
-```bash
 .venv\Scripts\activate
 ```
 
-### Linux / macOS
+### Linux / Mac
 
 ```bash
+python3 -m venv .venv
+
 source .venv/bin/activate
 ```
 
@@ -126,41 +127,21 @@ Install dependencies
 pip install -r requirements.txt
 ```
 
----
+Create a `.env` file using `.env.example`
 
-## 3. Environment Variables
-
-Create a `.env` file inside the backend directory.
-
-Example:
-
-```env
-MONGODB_URL=your_mongodb_connection
-
-SECRET_KEY=your_secret_key
-
-ALGORITHM=HS256
-
-ACCESS_TOKEN_EXPIRE_MINUTES=60
-
-GROQ_API_KEY=your_groq_api_key
-```
-
----
-
-## 4. Run Backend
+Run backend
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-Backend runs at
+Backend runs on
 
 ```
 http://127.0.0.1:8000
 ```
 
-Swagger Documentation
+Swagger API
 
 ```
 http://127.0.0.1:8000/docs
@@ -168,107 +149,125 @@ http://127.0.0.1:8000/docs
 
 ---
 
-# 🌐 Frontend
-
-Open another terminal.
-
-Navigate to frontend
-
-```bash
-cd frontend
-```
-
-Run a local server
-
-```bash
-python -m http.server 5500
-```
+## 3. Frontend
 
 Open
 
 ```
-http://localhost:5500/login.html
+frontend/index.html
+```
+
+or serve it using VS Code Live Server.
+
+---
+
+# 🔑 Environment Variables
+
+Create a `.env` file inside the backend directory.
+
+Example:
+
+```env
+MONGODB_URI=your_mongodb_uri
+
+JWT_SECRET_KEY=your_secret
+
+HUGGINGFACE_API_KEY=your_api_key
+
+LLM_MODEL_NAME=your_model
 ```
 
 ---
 
-# 🔑 Authentication Flow
+# 🧠 How It Works
+
+1. User uploads one or multiple PDF files.
+2. PDFs are extracted and split into chunks.
+3. Embeddings are generated using Hugging Face.
+4. Chunks are stored in a FAISS vector database.
+5. User asks a question.
+6. Similar chunks are retrieved.
+7. The LLM generates an answer using only the retrieved context.
+8. The response is displayed to the user.
+
+---
+
+# 📸 Screenshots
+
+Add screenshots here.
+
+Example:
 
 ```
-Signup
-   │
-   ▼
-Login
-   │
-   ▼
-JWT Token Generated
-   │
-   ▼
-PDF RAG Dashboard
+screenshots/
+    home.png
+    login.png
+    upload.png
+    chat.png
 ```
 
 ---
 
-# 📖 How It Works
+# 🎯 Challenges Faced
 
-1. Create an account.
-2. Login using your credentials.
-3. Upload one or multiple PDF files.
-4. PDFs are converted into text.
-5. Text is split into chunks.
-6. Chunks are converted into embeddings.
-7. Embeddings are stored in a FAISS vector database.
-8. Ask questions in natural language.
-9. Relevant chunks are retrieved.
-10. The LLM generates an accurate answer based on the retrieved context.
+This project involved several real-world challenges:
 
----
+- Dependency and package version conflicts
+- Configuring FAISS and embedding models
+- Managing environment variables during deployment
+- Improving document retrieval quality
+- Debugging API integration issues
+- Deploying both frontend and backend successfully
 
-# 📡 API Endpoints
-
-## Authentication
-
-| Method | Endpoint | Description |
-|---------|----------|-------------|
-| POST | `/signup` | Register user |
-| POST | `/login` | User login |
+These challenges helped me gain hands-on experience with AI application development, debugging, and deployment.
 
 ---
 
-## PDF
+# 📚 What I Learned
 
-| Method | Endpoint | Description |
-|---------|----------|-------------|
-| POST | `/upload` | Upload PDF |
-| POST | `/ask` | Ask question |
+- Retrieval-Augmented Generation (RAG)
+- LangChain workflows
+- Vector databases (FAISS)
+- FastAPI development
+- Authentication using JWT
+- MongoDB integration
+- REST API development
+- AI application deployment
+- Debugging complex dependency issues
 
 ---
 
-# 💡 Future Improvements
+# 🚀 Future Improvements
 
+- Conversation memory
+- Streaming responses
+- PDF highlighting
 - Chat history
-- Multiple chat sessions
-- Drag & Drop upload
-- PDF page citations
-- Streaming AI responses
-- Dark Mode
-- Admin Dashboard
-- Docker Support
-- Unit Testing
-- Rate Limiting
-- Email Verification
-- Password Reset
+- Admin dashboard
+- OCR support for scanned PDFs
+- Better citation support
+- Docker support
 
 ---
 
-# 👨‍💻 Author
+# 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+Feel free to fork the repository and submit a Pull Request.
+
+---
+
+# 👩‍💻 Author
 
 **Yashika Shakywal**
 
 GitHub: https://github.com/yashikashakywal
 
+LinkedIn:www.linkedin.com/in/yashikashakywal
+
 ---
 
-# ⭐ Support
+## ⭐ Support
 
-If you found this project useful, consider giving it a ⭐ on GitHub.
+If you found this project useful, please consider giving it a ⭐ on GitHub. It helps others discover the project and motivates further improvements.
