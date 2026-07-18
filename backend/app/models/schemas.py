@@ -21,6 +21,19 @@ class UserResponse(BaseModel):
     email: EmailStr
 
 
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str = Field(..., min_length=8, description="At least 8 characters")
+
+
+class MessageResponse(BaseModel):
+    message: str
+
+
 class QuestionRequest(BaseModel):
     question: str = Field(..., min_length=1, description="The question to ask about your documents")
 

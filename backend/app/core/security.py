@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta, timezone
+import hashlib
+import secrets
 
 import bcrypt
 import jwt
@@ -46,3 +48,29 @@ def decode_access_token(token: str) -> str:
     if not user_id:
         raise InvalidTokenError("Invalid token payload")
     return user_id
+
+
+def generate_reset_token() -> str:
+    """
+    The raw token that goes in the emailed link. Only ever exists in the
+    email itself and briefly in memory — never stored or logged as-is.
+    """
+    return secrets.token_urlsafe(32)
+
+
+def hash_reset_token(raw_token: str) -> str:
+    """
+    A deterministic hash so we can look the token up by value in the DB.
+    (Unlike passwords, reset tokens are already high-entropy random strings,
+    so a fast deterministic hash is fine here — no per-user salt needed.)
+    """
+    return hashlib.sha256(raw_token.encode("utf-8")).hexdigest()
+
+
+def reset_token_expiry() -> datetime:
+    """
+    Naive UTC datetime (no tzinfo) — matches how SQLite/SQLAlchemy stores and
+    returns DateTime columns, so comparisons against datetime.utcnow() later
+    don't raise a naive-vs-aware TypeError.
+    """
+    return datetime.utcnow() + timedelta(minutes=settings.password_reset_token_expire_minutes)

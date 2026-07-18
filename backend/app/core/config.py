@@ -34,6 +34,18 @@ class Settings(BaseSettings):
     # -- Database (stores user accounts only) --
     database_url: str = "sqlite:///./app/data/app.db"
 
+    # -- Password reset emails (via Resend, https://resend.com) --
+    resend_api_key: str = ""
+    # Resend's shared sandbox sender — works immediately with no setup, but
+    # only delivers to the email you signed up to Resend with. Once you verify
+    # your own domain in the Resend dashboard, switch this to an address on
+    # that domain (e.g. "Marginalia <noreply@yourdomain.com>") to email anyone.
+    email_from: str = "Marginalia <onboarding@resend.dev>"
+    # Where reset links point users back to — set this to your deployed
+    # frontend URL in production (e.g. https://pdf-rag-assistant-17ne.onrender.com)
+    frontend_base_url: str = "http://localhost:5500"
+    password_reset_token_expire_minutes: int = 30
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     @property
